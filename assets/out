@@ -32,6 +32,8 @@ branch=$(jq -r '.source.branch // ""' < $payload)
 git_config_payload=$(jq -r '.source.git_config // []' < $payload)
 repository=$(jq -r '.params.repository // ""' < $payload)
 tag=$(jq -r '.params.tag // ""' < $payload)
+texttocommit=$(jq -r '.params.texttocommit // ""' < $payload)
+filetocommit=$(jq -r '.params.filetocommit // ""' < $payload)
 tag_prefix=$(jq -r '.params.tag_prefix // ""' < $payload)
 rebase=$(jq -r '.params.rebase // false' < $payload)
 merge=$(jq -r '.params.merge // false' < $payload)
@@ -161,7 +163,21 @@ elif [ "$merge" = "true" ]; then
     git reset --hard $commit_to_push
 
     git fetch push-target "refs/notes/*:refs/notes/*"
-    git pull --no-edit push-target $branch
+
+    returnvalue=$(git pull --no-edit push-target $branch)
+    returnvalue=$(git status)
+    goon=0
+
+    while [ $goone == 0]
+    do
+      if [[ $returncode =~ "unmerged paths" ]]; then
+          git checkout --theirs ${filetocommit}
+          echo $texttocommit > ${filetocommit}
+          git add ${filetocommit}
+          git commit -m"Resolved conflicts"
+          $goon=1
+      fi
+    done
 
     result="0"
     push_with_result_check result
