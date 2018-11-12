@@ -164,7 +164,7 @@ elif [ "$merge" = "true" ]; then
 
     git fetch push-target "refs/notes/*:refs/notes/*"
     echo "Pulling the code again..."
-    returnvalue=$(git pull origin $branch)
+    returnvalue=$(git pull push-target $branch)
     echo "Kaustubh git status-"
     echo $returnvalue
     if [[ $returnvalue =~ "Automatic merge failed" ]]; then
