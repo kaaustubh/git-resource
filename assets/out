@@ -170,7 +170,7 @@ elif [ "$merge" = "true" ]; then
     echo $returnvalue
     goon=0
 
-    while [ $goone == 0]
+    while [ $goon == 0]
     do
       if [[ $returnvalue =~ "unmerged paths" ]]; then
           git checkout --theirs ${filetocommit}
