@@ -166,6 +166,7 @@ elif [ "$merge" = "true" ]; then
 
     returnvalue=$(git pull --no-edit push-target $branch)
     returnvalue=$(git status)
+    echo "Kaustubh git status- $returnvalue" 
     goon=0
 
     while [ $goone == 0]
