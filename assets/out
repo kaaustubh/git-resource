@@ -166,7 +166,8 @@ elif [ "$merge" = "true" ]; then
     echo "Pulling the code again..."
     git pull --no-edit push-target $branch
     returnvalue=$(git status)
-    echo "Kaustubh git status- $returnvalue" 
+    echo "Kaustubh git status-"
+    echo $returnvalue
     goon=0
 
     while [ $goone == 0]
