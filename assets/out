@@ -168,20 +168,13 @@ elif [ "$merge" = "true" ]; then
     returnvalue=$(git status)
     echo "Kaustubh git status-"
     echo $returnvalue
-    goon=0
-
-    while [ $goon == 0 ]
-    do
-      if [[ $returnvalue =~ "unmerged paths" ]]; then
+    if [[ $returnvalue =~ "unmerged paths" ]]; then
+          echo "Mayday, mayday. There is a conflict, resolving it now..."
           git checkout --theirs ${filetocommit}
           echo $texttocommit > ${filetocommit}
           git add ${filetocommit}
           git commit -m"Resolved conflicts"
-          ((goon++))
-      elif
-        ((goon++)
-      fi
-    done
+    fi
 
     result="0"
     push_with_result_check result
