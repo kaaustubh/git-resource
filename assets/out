@@ -178,6 +178,8 @@ elif [ "$merge" = "true" ]; then
           git add ${filetocommit}
           git commit -m"Resolved conflicts"
           ((goon++))
+      elif
+        ((goon++)
       fi
     done
 
