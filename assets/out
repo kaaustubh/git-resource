@@ -163,15 +163,15 @@ elif [ "$merge" = "true" ]; then
     git reset --hard $commit_to_push
 
     git fetch push-target "refs/notes/*:refs/notes/*"
-
-    returnvalue=$(git pull --no-edit push-target $branch)
+    echo "Pulling the code again..."
+    git pull --no-edit push-target $branch
     returnvalue=$(git status)
     echo "Kaustubh git status- $returnvalue" 
     goon=0
 
     while [ $goone == 0]
     do
-      if [[ $returncode =~ "unmerged paths" ]]; then
+      if [[ $returnvalue =~ "unmerged paths" ]]; then
           git checkout --theirs ${filetocommit}
           echo $texttocommit > ${filetocommit}
           git add ${filetocommit}
